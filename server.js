@@ -23,7 +23,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/example', (req, res) => {
+app.get('/', (req, res) => {
     res.status(200).json({ status: 'OK', message: 'If you are seeing this, server works!' });
 })
 
