@@ -4,6 +4,7 @@ const path = require('path')
 const mongoose = require('mongoose')
 
 
+//Since a remote atlas server has to be configured, this is left for later
 // mongoose.connect('mongodb://localhost:27017/<dbname>', { useNewUrlParser: true, useUnifiedTopology: true })
 //     .then(() => {
 //         console.log('Connected to mongod')
@@ -18,7 +19,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/example', (req, res) => {
-    res.send('This is example route')
+    res.status(200).json({ status: 'OK', message: 'If you are seeing this, server works!' });
 })
 
 app.listen(3000, () => {
