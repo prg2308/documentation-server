@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const Api = require('../models/apiModel');
 const router = express.Router();
 
@@ -10,6 +11,22 @@ router.get('/', async (req, res) => {
             res.status(404).json({ message: 'No APIs found' });
         }
         return res.status(200).json({ apiCount: apis.length, apis });
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({ message: err });
+    }
+})
+
+router.get('/names', async (req, res) => {
+    try {
+        const foundApis = await Api.find();
+        const apis = foundApis.map((api) => {
+            return {
+                id: api._id,
+                name: api.apiName
+            }
+        });
+        return res.status(200).json({ apiCount: apis.length, apis: apis });
     } catch (err) {
         console.log(err);
         return res.status(500).json({ message: err });
