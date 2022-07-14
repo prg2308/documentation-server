@@ -17,6 +17,22 @@ router.get('/', async (req, res) => {
     }
 })
 
+router.post('/add', async (req, res) => {
+
+    try {
+        const { api } = req.body;
+        if (!api || !api.apiName) {
+            return res.status(400).json({ message: 'Invalid data' });
+        }
+        const newApi = new Api(api);
+        await newApi.save();
+        return res.status(200).json({ message: 'API added successfully' });
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({ message: err });
+    }
+})
+
 router.get('/names', async (req, res) => {
     try {
         const foundApis = await Api.find();
@@ -62,22 +78,6 @@ router.get('/:id/name', async (req, res) => {
         }
 
         return res.status(200).json({ id: api._id, name: api.apiName });
-    } catch (err) {
-        console.log(err);
-        return res.status(500).json({ message: err });
-    }
-})
-
-router.post('/add', async (req, res) => {
-
-    try {
-        const { api } = req.body;
-        if (!api || !api.apiName) {
-            return res.status(400).json({ message: 'Invalid data' });
-        }
-        const newApi = new Api(api);
-        await newApi.save();
-        return res.status(200).json({ message: 'API added successfully' });
     } catch (err) {
         console.log(err);
         return res.status(500).json({ message: err });
